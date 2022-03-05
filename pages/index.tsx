@@ -1,9 +1,35 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+  let canvas
+  let image: HTMLImageElement
+  let ctx: CanvasRenderingContext2D
+  const [face, setFace] = useState<number>(0)
+
+  const changeFace = (isReverse = false) => {
+    canvas = document.getElementById('monster') as HTMLCanvasElement
+    ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+    image = new window.Image(30, 30)
+    let faceIdx
+
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
+    faceIdx = isReverse ? Math.abs((face + 3) % 4) : (face + 1) % 4
+
+    image.src = `/face${faceIdx}.png`
+    image.onload = function () {
+      ctx.drawImage(image, 0, 0)
+    }
+    setFace(faceIdx)
+  }
+
+  useEffect(() => {
+    changeFace()
+  }, [])
+
   return (
     <div className={styles.container}>
       <Head>
@@ -23,33 +49,25 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <Image
+            src="/arrow-left.png"
+            alt="왼쪽 버튼"
+            width={50}
+            height={50}
+            onClick={() => changeFace(true)}
+            className={styles.arrowBtn}
+          />
+          <div className={styles.character}>
+            <canvas id="monster" width="150" height="300"></canvas>
+          </div>
+          <Image
+            src="/arrow-right.png"
+            alt="오른쪽 버튼"
+            width={50}
+            height={50}
+            onClick={() => changeFace()}
+            className={styles.arrowBtn}
+          />
         </div>
       </main>
 
