@@ -1,10 +1,12 @@
 import type { NextPage } from 'next'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+  const { data: session } = useSession()
   let canvas
   let image: HTMLImageElement
   let ctx: CanvasRenderingContext2D
@@ -42,6 +44,19 @@ const Home: NextPage = () => {
         <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Six-sense !</a>
         </h1>
+        {session ? (
+          <>
+            안녕! {session.user?.name} <br />
+            <button onClick={() => signOut()}>로그아웃</button>
+          </>
+        ) : (
+          <>
+            Not signed in <br />
+            <button onClick={() => signIn('kakao')}>카카오 로그인</button>
+            <button onClick={() => signIn('google')}>구글 로그인</button>
+            <button onClick={() => signIn('twitter')}>트위터 로그인</button>
+          </>
+        )}
 
         <p className={styles.description}>
           Get started by editing
