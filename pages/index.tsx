@@ -17,6 +17,7 @@ const Home: NextPage = () => {
       Not signed in <br />
       <button onClick={() => signIn('kakao')}>카카오 로그인</button>
       <button onClick={() => signIn('google')}>구글 로그인</button>
+      <button onClick={() => signIn('twitter')}>트위터 로그인</button>
     </>
   )
 }
