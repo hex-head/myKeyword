@@ -8,7 +8,7 @@ const Home: NextPage = () => {
     return (
       <>
         안녕! {session.user?.name} <br />
-        <button onClick={() => signOut()}>카카오 로그아웃</button>
+        <button onClick={() => signOut()}>로그아웃</button>
       </>
     )
   }
@@ -16,6 +16,7 @@ const Home: NextPage = () => {
     <>
       Not signed in <br />
       <button onClick={() => signIn('kakao')}>카카오 로그인</button>
+      <button onClick={() => signIn('google')}>구글 로그인</button>
     </>
   )
 }
