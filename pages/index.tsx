@@ -14,6 +14,7 @@ const Home: NextPage = () => {
   }
   return (
     <>
+      <h1 className="text-3xl font-bold underline"> 포동 포동</h1>
       Not signed in <br />
       <button onClick={() => signIn('kakao')}>카카오 로그인</button>
       <button onClick={() => signIn('google')}>구글 로그인</button>
