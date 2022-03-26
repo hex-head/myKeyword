@@ -41,9 +41,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Six-sense !</a>
-        </h1>
+        <h1 className="text-3xl font-bold underline"> 포동 포동</h1>
         {session ? (
           <>
             안녕! {session.user?.name} <br />
