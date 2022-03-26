@@ -4,33 +4,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import styles from '../styles/Home.module.css'
+import Character from './components/Character'
 
 const Home: NextPage = () => {
   const { data: session } = useSession()
-  let canvas
-  let image: HTMLImageElement
-  let ctx: CanvasRenderingContext2D
-  const [face, setFace] = useState<number>(0)
-
-  const changeFace = (isReverse = false) => {
-    canvas = document.getElementById('monster') as HTMLCanvasElement
-    ctx = canvas.getContext('2d') as CanvasRenderingContext2D
-    image = new window.Image(30, 30)
-    let faceIdx
-
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height)
-    faceIdx = isReverse ? Math.abs((face + 3) % 4) : (face + 1) % 4
-
-    image.src = `/face${faceIdx}.png`
-    image.onload = function () {
-      ctx.drawImage(image, 0, 0)
-    }
-    setFace(faceIdx)
-  }
-
-  useEffect(() => {
-    changeFace()
-  }, [])
 
   return (
     <div className={styles.container}>
@@ -42,7 +19,7 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Six-sense !</a>
+          Welcome to <a href="https://nextjs.org">HexHead!</a>
         </h1>
         {session ? (
           <>
@@ -63,27 +40,7 @@ const Home: NextPage = () => {
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
-        <div className={styles.grid}>
-          <Image
-            src="/arrow-left.png"
-            alt="왼쪽 버튼"
-            width={50}
-            height={50}
-            onClick={() => changeFace(true)}
-            className={styles.arrowBtn}
-          />
-          <div className={styles.character}>
-            <canvas id="monster" width="150" height="300"></canvas>
-          </div>
-          <Image
-            src="/arrow-right.png"
-            alt="오른쪽 버튼"
-            width={50}
-            height={50}
-            onClick={() => changeFace()}
-            className={styles.arrowBtn}
-          />
-        </div>
+        <Character />
       </main>
 
       <footer className={styles.footer}>
